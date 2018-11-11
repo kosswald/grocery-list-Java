@@ -38,18 +38,23 @@ public class EmailSender extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //these are the strings that dictate the form and content of the email
+		System.out.println("here");
+		//these are the strings that dictate the form and content of the email
 		String from = USER_NAME;
         String pass = PASSWORD;
         //RECIPIENT is currently a static variable, so will need to be changed to grab the email of the user
-        String intended = RECIPIENT;
+        //String intended = RECIPIENT;
+        String intended = request.getParameter("email");
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        
         // list of recipient email addresses
         String[] to = { intended }; 
         String subject = "Welcome to GroSCery!";
         
         //in the body, we'll need to substitute the information given to use by the user
         String body = "Thank you for creating an account with GroSCery!  Here is your account information for future reference:";
-
+        body += "\nname: " + name + "\nemail: " + intended + "\npassword: " + password;
         sendFromGMail(from, pass, to, subject, body);
 	}
 	
@@ -63,6 +68,11 @@ public class EmailSender extends HttpServlet {
         props.put("mail.smtp.password", pass);
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
+        
+        System.out.println("From: " + from);
+        System.out.println("pass: " + pass);
+        System.out.println("to: " + to[0]);
+        System.out.println("Body: " + body);
 
         Session session = Session.getDefaultInstance(props);
         MimeMessage message = new MimeMessage(session);

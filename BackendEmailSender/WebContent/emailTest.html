@@ -6,10 +6,17 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			function sendEmail(){
+				var name = document.getElementById("name").value;
+				var email = document.getElementById("email").value;
+				var password = document.getElementById("password").value;
+				
+				
 				$.ajax({
 					url:"EmailSender",
 					data:{
-						field: "emailTest"
+						name: name,
+						email: email,
+						password: password
 					},
 					success: function(){
 						console.log("email sent");
@@ -20,5 +27,8 @@
 	</head>
 	<body>
 		<button type="button" onclick="sendEmail();"> Send Email </button>
+		<input type="text" id = "email" placeholder = "email" />
+		<input type="text" id = "name" placeholder = "name" />
+		<input type = "text" id = "password" placeholder = "password" />
 	</body>
 </html>
